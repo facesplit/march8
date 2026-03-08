@@ -6,121 +6,117 @@
   <title>8 Марта — Открытка</title>
   <style>
     :root {
-      --bg-1: #f8eef2;
-      --bg-2: #fff8fa;
-      --surface: rgba(255, 250, 251, 0.9);
-      --surface-2: #fff7f8;
+      --bg-1: #fbf1f5;
+      --bg-2: #fff9fb;
+      --surface: rgba(255, 251, 252, 0.92);
+      --surface-2: #fff7fa;
       --card: #fffafb;
-      --text: #5e4855;
-      --muted: #8f7483;
-      --accent: #e97fab;
-      --accent-2: #c05487;
+      --text: #654f5b;
+      --muted: #8d7583;
+      --accent: #ea7fb0;
+      --accent-2: #bf5f8c;
       --line: #efdde4;
-      --shadow: 0 16px 40px rgba(162, 109, 136, 0.12);
-      --radius-xl: 24px;
+      --shadow: 0 18px 42px rgba(171, 120, 146, 0.12);
+      --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
-      --container-w: 1100px;
-      --space-1: 8px;
-      --space-2: 12px;
-      --space-3: 16px;
-      --space-4: 24px;
-      --space-5: 32px;
-      --h1: clamp(28px, 4vw, 40px);
-      --h2: clamp(22px, 3vw, 30px);
+      --container-w: 1120px;
+      --h1: clamp(28px, 4vw, 42px);
+      --h2: clamp(22px, 3vw, 31px);
       --body: 16px;
-      --caption: 14px;
     }
-
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       color: var(--text);
-      background: radial-gradient(circle at top, #fff7fb 0%, var(--bg-1) 50%, #f6ecef 100%);
+      background:
+        radial-gradient(circle at 20% 0%, #fffdfd 0%, transparent 25%),
+        radial-gradient(circle at 100% 100%, #f7ebf0 0%, transparent 30%),
+        linear-gradient(180deg, #fffafc, #f8eef2 48%, #f7eef1 100%);
       overflow-x: hidden;
     }
-    button, input, textarea { font: inherit; }
-    .app {
-      min-height: 100%;
-      padding: 24px 14px;
-      position: relative;
-    }
+    button, a { font: inherit; }
+    .app { min-height: 100%; padding: 22px 14px; position: relative; }
     .particles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
     }
     .particle {
       position: absolute;
-      color: rgba(233, 127, 171, 0.28);
-      animation: floatUp linear infinite;
       user-select: none;
-      font-size: 12px;
+      animation: drift linear infinite;
+      opacity: .25;
+      filter: blur(.1px);
     }
-    @keyframes floatUp {
-      0% { transform: translateY(20px) translateX(0); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-120px) translateX(16px); opacity: 0; }
+    @keyframes drift {
+      0%   { transform: translate3d(0, 16px, 0) scale(.96); opacity: 0; }
+      15%  { opacity: .22; }
+      50%  { transform: translate3d(10px, -32px, 0) scale(1); opacity: .35; }
+      100% { transform: translate3d(-6px, -110px, 0) scale(1.05); opacity: 0; }
+    }
+
+    .burst-layer {
+      position: fixed; inset: 0; pointer-events: none; z-index: 40;
+      overflow: hidden;
+    }
+    .burst {
+      position: absolute;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 15px;
+      animation: burstFly .72s ease-out forwards;
+      filter: drop-shadow(0 6px 10px rgba(234, 127, 176, .18));
+    }
+    @keyframes burstFly {
+      0% { transform: translate(0,0) scale(.6); opacity: 0; }
+      8% { opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(1.15) rotate(var(--rot)); opacity: 0; }
+    }
+    .flash {
+      position: absolute;
+      width: 12px; height: 12px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,.9), rgba(234,127,176,.22) 60%, rgba(234,127,176,0) 75%);
+      animation: flashPulse .52s ease-out forwards;
+    }
+    @keyframes flashPulse {
+      from { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+      to   { transform: translate(-50%, -50%) scale(28); opacity: 0; }
     }
 
     .shell {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 2;
       width: min(100%, var(--container-w));
-      min-height: clamp(620px, 82vh, 760px);
+      min-height: clamp(620px, 82vh, 780px);
       margin: 0 auto;
-      background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,248,250,0.72));
-      border: 1px solid rgba(239, 221, 228, 0.9);
+      background: linear-gradient(180deg, rgba(255,255,255,.68), rgba(255,248,250,.8));
+      border: 1px solid rgba(239, 221, 228, .94);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
-      padding: 24px 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       backdrop-filter: blur(8px);
+      padding: 22px 18px;
+      overflow: hidden;
     }
-    .scene {
-      display: none;
-      flex: 1;
-      animation: fadeIn 0.45s ease;
-    }
-    .scene.active { display: flex; flex-direction: column; }
-    @keyframes fadeIn {
+    .scene { display: none; min-height: 100%; }
+    .scene.active { display: flex; flex-direction: column; animation: sceneIn .56s ease; }
+    @keyframes sceneIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     .scene-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-3);
-      margin-bottom: var(--space-4);
-      min-height: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-bottom: 18px; min-height: 28px;
     }
     .eyebrow {
       font-family: Arial, Helvetica, sans-serif;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      font-size: 13px; font-weight: 700; color: var(--muted);
     }
-    .scene-main {
-      flex: 1;
-      display: grid;
-      gap: 16px;
-    }
+    .scene-main { display: grid; gap: 18px; flex: 1; align-content: start; }
     .scene-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: var(--space-4);
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 12px; margin-top: 20px; flex-wrap: wrap;
     }
 
     .card {
@@ -131,200 +127,175 @@
     }
     .card-pad { padding: 20px; }
     .soft-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border: 1px dashed #e8ccd8;
-      border-radius: 999px;
-      font-size: 14px;
-      color: var(--muted);
-      background: rgba(255,255,255,0.65);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 14px; border: 1px dashed #ead1dd;
+      border-radius: 999px; font-size: 14px; color: var(--muted);
+      background: rgba(255,255,255,.72);
       font-family: Arial, Helvetica, sans-serif;
     }
-
     .title-1 {
-      font-size: var(--h1);
-      line-height: 1.08;
-      margin: 0 0 12px;
-      color: var(--accent-2);
+      margin: 0 0 10px;
+      font-size: var(--h1); line-height: 1.06; color: var(--accent-2);
     }
     .title-2 {
-      font-size: var(--h2);
-      line-height: 1.15;
       margin: 0 0 10px;
-      color: var(--accent-2);
+      font-size: var(--h2); line-height: 1.12; color: var(--accent-2);
     }
     .body {
-      margin: 0;
-      font-size: var(--body);
-      line-height: 1.5;
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      margin: 0; font-size: var(--body); line-height: 1.55;
+      color: var(--text); font-family: Arial, Helvetica, sans-serif;
     }
-    .muted {
-      color: var(--muted);
-      font-family: Arial, Helvetica, sans-serif;
-    }
+    .muted { color: var(--muted); font-family: Arial, Helvetica, sans-serif; }
+
+    .reveal { opacity: 0; transform: translateY(16px); animation: revealUp .72s ease forwards; }
+    .delay-1 { animation-delay: .08s; }
+    .delay-2 { animation-delay: .18s; }
+    .delay-3 { animation-delay: .28s; }
+    .delay-4 { animation-delay: .38s; }
+    @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
 
     .btn {
-      border: 0;
-      border-radius: 999px;
-      min-height: 52px;
-      padding: 0 24px;
+      border: 0; border-radius: 999px; min-height: 54px; padding: 0 24px;
       cursor: pointer;
-      background: linear-gradient(180deg, #f391bb, #e678a8);
-      color: white;
-      font-weight: 700;
-      font-family: Arial, Helvetica, sans-serif;
-      box-shadow: 0 10px 24px rgba(233, 127, 171, 0.25);
-      transition: transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+      background: linear-gradient(180deg, #f592bd, #e678a8);
+      color: #fff; font-weight: 700; font-family: Arial, Helvetica, sans-serif;
+      box-shadow: 0 12px 24px rgba(233, 127, 171, 0.24);
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+      text-decoration:none;
+      display:inline-flex;align-items:center;justify-content:center;
     }
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(233, 127, 171, 0.28); }
-    .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 28px rgba(233,127,171,.27); }
+    .btn:disabled { opacity: .58; cursor: not-allowed; transform: none; box-shadow: none; }
     .btn-secondary {
-      background: white;
-      color: var(--accent-2);
-      border: 1px solid var(--line);
-      box-shadow: none;
+      background: #fff; color: var(--accent-2);
+      border: 1px solid var(--line); box-shadow: none;
     }
     .btn-full { width: 100%; }
 
-    /* Scene 1 */
     .welcome {
       position: relative;
-      align-items: center;
-      justify-content: center;
-      min-height: 100%;
+      min-height: calc(clamp(620px, 82vh, 780px) - 44px);
+      display: flex; align-items: center; justify-content: center;
     }
     .welcome-center {
-      width: min(100%, 520px);
+      width: min(100%, 430px);
       text-align: center;
-      padding: 28px;
+      padding: 30px 26px;
       margin: auto;
     }
     .big-eight {
-      position: absolute;
-      left: 7%; top: 18%;
-      font-size: clamp(100px, 15vw, 160px);
-      color: rgba(233,127,171,0.22);
-      line-height: 1;
-      pointer-events: none;
+      position: absolute; left: 8%; top: 20%;
+      font-size: clamp(96px, 15vw, 160px);
+      color: rgba(233,127,171,.19); line-height: 1; pointer-events: none;
     }
     .deco-flower, .deco-gif, .deco-gif-2 {
-      position: absolute;
-      user-select: none;
-      pointer-events: none;
+      position: absolute; user-select: none; pointer-events: none;
+      filter: drop-shadow(0 18px 20px rgba(122,85,102,.08));
     }
-    .deco-flower { left: 10%; bottom: 8%; width: clamp(120px, 18vw, 210px); }
-    .deco-gif { right: 8%; bottom: 12%; width: clamp(90px, 12vw, 150px); }
-    .deco-gif-2 { right: 12%; top: 16%; width: clamp(72px, 10vw, 130px); }
+    .deco-flower { left: 13%; bottom: 10%; width: clamp(120px, 18vw, 220px); }
+    .deco-gif { right: 9%; bottom: 13%; width: clamp(86px, 12vw, 145px); }
+    .deco-gif-2 { right: 10%; top: 18%; width: clamp(72px, 10vw, 130px); }
+    .welcome-center .btn { min-width: 190px; }
 
-    /* Scene 2 */
     .invitation-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(320px, 1fr) minmax(380px, 1.1fr);
       align-items: start;
-      gap: 18px;
-    }
-    .invite-card {
-      display: grid;
-      gap: 12px;
+      gap: 22px;
     }
     .invite-paper {
       position: relative;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid #efcfda;
-      box-shadow: 0 14px 28px rgba(176, 124, 149, 0.14);
-      min-height: 280px;
-      isolation: isolate;
-      transform: translateZ(0);
-      animation: paperBreathe 9.5s ease-in-out infinite;
+      min-height: 390px;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+      overflow: visible;
+      will-change: transform;
+    }
+    .invite-paper.reveal {
+      animation:
+        revealUp .72s ease forwards,
+        paperBreathe 9.5s ease-in-out .72s infinite;
     }
     @keyframes paperBreathe {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-2px); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .invite-paper { animation: none; }
+      .invite-paper { will-change: auto; }
+      .invite-paper.reveal { animation: revealUp .72s ease forwards; }
     }
     .invite-paper::before {
       content: "";
       position: absolute;
-      inset: 0;
+      inset: 10px 16px 14px 16px;
+      border-radius: 22px;
       background:
-        radial-gradient(circle at 20% 25%, rgba(255,255,255,0.65), rgba(255,255,255,0) 55%),
-        radial-gradient(circle at 75% 70%, rgba(255, 236, 246, 0.5), rgba(255, 236, 246, 0) 58%),
+        radial-gradient(circle at 22% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0) 56%),
+        radial-gradient(circle at 78% 72%, rgba(255, 236, 246, 0.46), rgba(255, 236, 246, 0) 60%),
         repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 2px, rgba(255,255,255,0) 2px 10px);
       mix-blend-mode: soft-light;
       opacity: 0.55;
-      z-index: 1;
+      z-index: 2;
       pointer-events: none;
     }
     .invite-paper::after {
       content: "";
       position: absolute;
-      right: 14px;
-      bottom: 14px;
-      width: 52px;
-      height: 52px;
+      right: 26px;
+      bottom: 24px;
+      width: 54px;
+      height: 54px;
       border-radius: 999px;
       background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0) 44%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.88), rgba(255,255,255,0) 44%),
         radial-gradient(circle at 50% 55%, rgba(233, 127, 171, 0.95), rgba(192, 84, 135, 0.98));
-      box-shadow: 0 10px 18px rgba(176, 108, 141, 0.22);
-      opacity: 0.92;
+      box-shadow: 0 12px 22px rgba(176, 108, 141, 0.22);
+      opacity: 0.9;
       z-index: 3;
       pointer-events: none;
     }
-    .invite-paper-frame {
-      position: absolute;
-      inset: 0;
+    .invite-frame {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      opacity: 0.98;
-      z-index: 0;
-    }
-    .invite-paper-content {
+      display: block;
+      border-radius: 22px;
+      filter: drop-shadow(0 16px 24px rgba(180, 122, 148, .10));
       position: relative;
-      z-index: 2;
-      min-height: 280px;
-      padding: clamp(28px, 4vw, 42px) clamp(24px, 5vw, 50px);
-      display: grid;
-      align-content: center;
+      z-index: 1;
+    }
+    .invite-overlay {
+      position: absolute;
+      inset: 7.5% 11% 11.5% 11%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      align-items: center;
       text-align: center;
-      background: radial-gradient(circle at center, rgba(255, 241, 247, 0.56), rgba(255, 241, 247, 0.14));
+      z-index: 4;
+      transform: translateY(-18px);
     }
-    .invite-paper .title-2 {
-      margin-bottom: 12px;
-      text-wrap: balance;
+    .invite-overlay .title-2 { margin-bottom: 0; }
+    .invite-overlay .body {
+      max-width: 40ch;
+      margin: 0 auto;
     }
-    .invite-paper .body {
-      line-height: 1.65;
-      text-wrap: pretty;
-    }
-    .invite-hint {
-      margin: 0;
+    .invite-sign {
+      margin: 8px 0 0;
       font-family: Georgia, "Times New Roman", serif;
       font-style: italic;
       color: rgba(94, 72, 85, 0.78);
       letter-spacing: 0.01em;
       display: inline-flex;
+      align-items: center;
       gap: 8px;
       justify-content: center;
-      align-items: center;
     }
-    .invite-hint::before {
+    .invite-sign::before {
       content: "♥";
       color: rgba(192, 84, 135, 0.9);
       filter: drop-shadow(0 6px 10px rgba(176, 108, 141, 0.18));
     }
-    @media (hover: hover) {
-      .invite-paper:hover { box-shadow: 0 18px 34px rgba(176, 124, 149, 0.18); }
-    }
-
     .calendar-wrap {
       position: relative;
       border-radius: 18px;
@@ -341,24 +312,58 @@
       opacity: 0.9;
     }
     .calendar-wrap > * { position: relative; z-index: 1; }
-    .calendar-title { text-align: center; margin-bottom: 14px; }
+    .calendar-title { text-align: center; margin-bottom: 12px; }
     .calendar-card { padding: 14px; position: relative; }
     .calendar-hero {
       border-radius: 14px;
       overflow: hidden;
-      aspect-ratio: 4 / 3;
+      height: 250px;
       background: #f8dff0;
       margin-bottom: 14px;
-      padding: 8px;
+      position: relative;
     }
-    .calendar-hero img {
+    .smart-media {
+      position: relative;
+      overflow: hidden;
+      background: #f6eaf0;
+    }
+    .smart-media::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: var(--bg);
+      background-size: cover;
+      background-position: center;
+      filter: blur(14px) saturate(0.95);
+      transform: scale(1.08);
+      opacity: .26;
+    }
+    .smart-media > img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-position: center center;
+      display: block;
+      image-rendering: auto;
+      object-fit: contain;
+    }
+
+    /* Final photo cards: clean, no blurred side-fill */
+    .flip-front {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      padding: 12px;
+      background: linear-gradient(180deg, #fffafb, #fcecf4);
+    }
+    .flip-front > img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      object-position: center 35%;
+      object-position: center center;
       display: block;
-      border-radius: 10px;
-      background: #fff4f8;
+      border-radius: 12px;
+      background: #fff;
       image-rendering: auto;
     }
     .calendar-grid {
@@ -366,36 +371,28 @@
       grid-template-columns: repeat(7, 1fr);
       gap: 8px;
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 14px;
-      text-align: center;
+      font-size: 14px; text-align: center;
     }
-    .calendar-cell {
-      padding: 8px 0;
-      border-radius: 10px;
-    }
+    .calendar-cell { padding: 8px 0; border-radius: 10px; }
     .calendar-head { color: var(--muted); font-size: 12px; font-weight: 700; }
     .calendar-hit {
-      background: rgba(233,127,171,0.12);
-      border: 1px solid rgba(233,127,171,0.18);
-      color: var(--accent-2);
-      font-weight: 700;
+      background: rgba(233,127,171,.12);
+      border: 1px solid rgba(233,127,171,.18);
+      color: var(--accent-2); font-weight: 700;
       animation: softPulse 1.8s ease-in-out infinite;
     }
     @keyframes softPulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(233,127,171,0.12); }
-      50% { box-shadow: 0 0 0 8px rgba(233,127,171,0.04); }
+      0%,100% { box-shadow: 0 0 0 0 rgba(233,127,171,.12); }
+      50% { box-shadow: 0 0 0 8px rgba(233,127,171,.04); }
     }
     .photobooth {
       position: absolute;
-      right: -24px;
-      top: 92px;
-      width: 145px;
+      right: -14px; top: 108px;
+      width: clamp(118px, 14vw, 154px);
       transform: rotate(5deg);
-      box-shadow: 0 14px 28px rgba(160, 112, 137, 0.18);
-      border-radius: 14px;
-      overflow: hidden;
-      border: 6px solid #fff7fb;
-      background: white;
+      box-shadow: 0 14px 28px rgba(160, 112, 137, .18);
+      border-radius: 14px; overflow: hidden;
+      border: 6px solid #fff8fb; background: #fff;
     }
     .photobooth::before {
       content: "";
@@ -410,78 +407,60 @@
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0) 45%),
         radial-gradient(circle at 50% 55%, rgba(233, 127, 171, 0.9), rgba(192, 84, 135, 0.98));
       box-shadow: 0 10px 18px rgba(160, 112, 137, 0.22);
+      z-index: 2;
     }
     @media (hover: hover) {
       .photobooth:hover { transform: rotate(4deg) translateY(-2px); }
     }
     .photobooth img { width: 100%; display: block; }
 
-    /* Scene 3 */
     .countdown-grid {
-      grid-template-columns: 7fr 5fr;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, .62fr);
+      gap: 24px;
       align-items: start;
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
     }
     .countdown-shell {
-      max-width: 580px;
+      display: flex; flex-direction: column; gap: 14px;
     }
     .timer-box {
       padding: 18px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 14px;
+      gap: 14px;
+      margin-top: 4px;
     }
     .time-card {
       background: var(--surface-2);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px 8px;
+      border-radius: 18px;
+      padding: 22px 10px;
       text-align: center;
     }
     .time-value {
-      font-size: clamp(28px, 4vw, 42px);
+      font-size: clamp(42px, 5vw, 62px);
       color: var(--accent-2);
-      font-weight: 700;
-      line-height: 1;
+      font-weight: 700; line-height: 1;
     }
     .time-label {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 8px;
-      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px; color: var(--muted);
+      margin-top: 10px; font-family: Arial, Helvetica, sans-serif;
     }
-    .player-card {
-      max-width: 320px;
-      margin-left: auto;
-    }
+    .player-card { max-width: 320px; margin-left: auto; }
     .player-preview {
-      aspect-ratio: 1 / 0.72;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #f2e0b8;
-      margin-bottom: 14px;
-      display: grid;
-      place-items: center;
-      position: relative;
+      aspect-ratio: 1 / .74;
+      border-radius: 14px; overflow: hidden;
+      background: #f2e0b8; margin-bottom: 14px;
+      display: grid; place-items: center; position: relative;
     }
     .player-preview img { max-width: 84%; max-height: 84%; display: block; }
     .player-kitty {
-      position: absolute;
-      right: 8px;
-      bottom: 8px;
-      width: 56px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.92);
-      padding: 4px;
+      position: absolute; right: 8px; bottom: 8px;
+      width: 56px; border-radius: 12px; background: rgba(255,255,255,.92); padding: 4px;
     }
 
-    /* Scene 4 */
-    .final-grid {
-      grid-template-columns: 8fr 4fr;
-      align-items: start;
-    }
+    .final-stack { display: grid; gap: 18px; }
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -489,87 +468,82 @@
     }
     .flip-card {
       perspective: 1000px;
-      min-height: 240px;
+      aspect-ratio: 4 / 5;
+      min-height: 360px;
       cursor: pointer;
     }
     .flip-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      min-height: 240px;
+      position: relative; width: 100%; height: 100%; min-height: 360px;
       transition: transform .6s ease;
       transform-style: preserve-3d;
     }
     .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
     .flip-face {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-      border-radius: 16px;
-      overflow: hidden;
+      position: absolute; inset: 0; backface-visibility: hidden;
+      border-radius: 16px; overflow: hidden;
       border: 1px solid var(--line);
-      background: white;
+      background: #fff;
       box-shadow: 0 12px 22px rgba(165, 116, 140, 0.08);
+      transform: translateZ(0);
     }
-    .flip-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .flip-back {
       transform: rotateY(180deg);
-      display: grid;
-      place-items: center;
-      padding: 16px;
-      text-align: center;
+      display: grid; place-items: center;
+      padding: 18px; text-align: center;
       background: linear-gradient(180deg, #fffafd, #fcedf4);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.5;
+      font-family: Arial, Helvetica, sans-serif; line-height: 1.55;
     }
-    .letter-card.sticky { position: sticky; top: 8px; }
+    .letter-card { overflow: hidden; }
     .letter-envelope {
-      height: 120px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, #fce3ee, #f7d8e6);
       position: relative;
+      min-height: 110px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fde5ef, #f8dce7);
       overflow: hidden;
       cursor: pointer;
-      margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center;
     }
     .letter-envelope::before {
       content: "";
-      position: absolute;
-      inset: 0;
-      background: #efbfd4;
-      clip-path: polygon(0 0, 50% 58%, 100% 0);
-      transition: transform .4s ease;
+      position: absolute; inset: 0;
+      background: #f0bfd5;
+      clip-path: polygon(0 0, 50% 54%, 100% 0);
+      transition: transform .42s ease;
       transform-origin: top center;
     }
     .letter-card.open .letter-envelope::before { transform: rotateX(180deg); }
+    .letter-envelope span {
+      position: relative; z-index: 2;
+      font-size: 20px; color: var(--accent-2); font-weight: 700;
+    }
     .letter-sheet {
       max-height: 0;
       overflow: hidden;
-      transition: max-height .45s ease, padding-top .45s ease;
+      transition: max-height .46s ease, padding-top .46s ease;
       padding-top: 0;
     }
-    .letter-card.open .letter-sheet { max-height: 420px; padding-top: 14px; }
-
-    @media (max-width: 960px) {
-      .shell { padding: 20px 14px; }
-      .invitation-grid,
-      .countdown-grid,
-      .final-grid { grid-template-columns: 1fr; }
-      .player-card { margin-left: 0; }
-      .photobooth {
-        position: static;
-        width: 120px;
-        transform: rotate(4deg);
-        margin: 14px 0 0 auto;
-      }
-      .scene-actions { justify-content: flex-start; }
-      .big-eight { left: 4%; top: 8%; }
-      .deco-flower { left: 4%; bottom: 8%; width: 120px; }
-      .deco-gif { right: 4%; bottom: 10%; width: 88px; }
-      .deco-gif-2 { display: none; }
-      .letter-card.sticky { position: static; }
+    .letter-card.open .letter-sheet {
+      max-height: 520px;
+      padding-top: 14px;
     }
 
+    @media (max-width: 960px) {
+      .shell { padding: 18px 14px; }
+      .invitation-grid, .countdown-grid { grid-template-columns: 1fr; }
+      .photobooth {
+        position: static; width: 124px;
+        transform: rotate(4deg); margin: 14px 0 0 auto;
+      }
+      .player-card { margin-left: 0; }
+      .scene-actions { justify-content: flex-start; }
+      .big-eight { left: 5%; top: 8%; }
+      .deco-flower { left: 5%; bottom: 8%; width: 126px; }
+      .deco-gif { right: 4%; bottom: 10%; width: 86px; }
+      .deco-gif-2 { display: none; }
+      .invite-paper { min-height: 340px; }
+      .invite-overlay { inset: 8.5% 12% 12.5% 12%; transform: translateY(-14px); }
+      .time-value { font-size: clamp(38px, 8vw, 52px); }
+    }
     @media (max-width: 640px) {
       .app { padding: 14px; }
       .shell {
@@ -577,30 +551,34 @@
         padding: 16px;
         border-radius: 20px;
       }
-      .welcome-center { padding: 20px; }
-      .timer-box { grid-template-columns: repeat(2, 1fr); }
-      .photo-grid { grid-template-columns: 1fr; }
-      .scene-header { margin-bottom: 16px; }
-      .scene-actions { margin-top: 18px; }
+      .welcome-center { padding: 22px 18px; width: min(100%, 360px); }
       .title-1 { font-size: clamp(26px, 8vw, 34px); }
       .title-2 { font-size: clamp(22px, 6vw, 28px); }
       .body { font-size: 15px; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .timer-box { grid-template-columns: repeat(2, 1fr); }
+      .flip-card, .flip-inner { min-height: 320px; }
+      .big-eight { font-size: 88px; }
+      .invite-paper { min-height: 280px; }
+      .invite-overlay { inset: 10.5% 12% 13.5% 12%; gap: 12px; transform: translateY(-10px); }
+      .calendar-hero { height: 210px; }
     }
   </style>
 </head>
 <body>
   <div class="particles" id="particles"></div>
+  <div class="burst-layer" id="burstLayer"></div>
+
   <div class="app">
     <main class="shell">
-      <!-- Scene 1 -->
       <section class="scene active" id="scene-1">
         <div class="scene-main welcome">
-          <div class="big-eight">8</div>
-          <img class="deco-flower" data-config-img="flowerImage" alt="flower" />
-          <img class="deco-gif" data-config-img="welcomeGif" alt="cat gif" />
-          <img class="deco-gif-2" data-config-img="welcomeGifSecondary" alt="cat gif" />
+          <div class="big-eight reveal">8</div>
+          <img class="deco-flower reveal delay-3" data-config-img="flowerImage" alt="flower" />
+          <img class="deco-gif reveal delay-2" data-config-img="welcomeGif" alt="cat gif" />
+          <img class="deco-gif-2 reveal delay-1" data-config-img="welcomeGifSecondary" alt="cat gif" />
 
-          <article class="card welcome-center">
+          <article class="card welcome-center reveal delay-2">
             <p class="muted" id="welcomeEyebrow"></p>
             <h1 class="title-1" id="welcomeTitle"></h1>
             <p class="body muted" id="welcomeSubtitle"></p>
@@ -611,52 +589,48 @@
         </div>
       </section>
 
-      <!-- Scene 2 -->
       <section class="scene" id="scene-2">
-        <div class="scene-header">
+        <div class="scene-header reveal">
           <div class="eyebrow" id="invitationEyebrow"></div>
         </div>
         <div class="scene-main invitation-grid">
-          <article class="card card-pad invite-card" id="inviteCard">
-            <div class="invite-paper">
-              <img class="invite-paper-frame" data-config-img="invitationFrameImage" alt="invitation frame" />
-              <div class="invite-paper-content">
-                <h2 class="title-2" id="inviteTitle"></h2>
-                <p class="body" id="inviteBody"></p>
-              </div>
+          <article class="invite-paper reveal delay-1" id="invitePaper">
+            <img class="invite-frame" data-config-img="invitationPaper" alt="invitation frame" />
+            <div class="invite-overlay">
+              <h2 class="title-2" id="inviteTitle"></h2>
+              <p class="body" id="inviteBody"></p>
+              <p class="invite-sign" id="inviteSign"></p>
             </div>
-            <p class="invite-hint" id="inviteHint"></p>
           </article>
 
-          <div class="calendar-wrap">
+          <div class="calendar-wrap reveal delay-2">
             <h2 class="title-1 calendar-title" id="calendarTitle"></h2>
             <article class="card calendar-card">
-              <div class="calendar-hero"><img data-config-img="calendarInnerImage" alt="calendar image" /></div>
+              <div class="calendar-hero smart-media" id="calendarMedia"><img data-config-img="calendarInnerImage" alt="calendar image" /></div>
               <div class="calendar-grid" id="calendarGrid"></div>
             </article>
             <div class="photobooth"><img data-config-img="photoboothImage" alt="photobooth" /></div>
           </div>
         </div>
-        <div class="scene-actions">
+        <div class="scene-actions reveal delay-3">
           <span class="soft-badge" id="invitationBadge"></span>
           <button class="btn" id="toCountdownBtn"></button>
         </div>
       </section>
 
-      <!-- Scene 3 -->
       <section class="scene" id="scene-3">
         <div class="scene-main countdown-grid">
-          <div class="countdown-shell">
+          <div class="countdown-shell reveal delay-1">
             <h2 class="title-1" id="countdownTitle"></h2>
             <p class="body muted" id="countdownSubtitle"></p>
-            <div class="eyebrow" style="margin-top:16px;" id="countdownLabel"></div>
+            <div class="eyebrow" style="margin-top:8px;" id="countdownLabel"></div>
             <div class="card timer-box" id="timerBox"></div>
-            <div class="scene-actions" style="justify-content:flex-start; margin-top: 18px;">
+            <div class="scene-actions" style="justify-content:flex-start; margin-top: 6px;">
               <button class="btn btn-full" id="unlockBtn" disabled></button>
             </div>
           </div>
 
-          <article class="card card-pad player-card">
+          <article class="card card-pad player-card reveal delay-2">
             <h2 class="title-2" id="playerTitle"></h2>
             <div class="player-preview">
               <img data-config-img="playerImage" alt="player" />
@@ -667,18 +641,16 @@
         </div>
       </section>
 
-      <!-- Scene 4 -->
       <section class="scene" id="scene-4">
-        <div class="scene-header">
+        <div class="scene-header reveal">
           <h2 class="title-1" style="margin:0;" id="finalTitle"></h2>
         </div>
-        <div class="scene-main final-grid">
-          <div class="photo-grid" id="photoGrid"></div>
-          <article class="card card-pad letter-card sticky" id="letterCard">
-            <div class="letter-envelope" id="letterToggle"></div>
-            <h2 class="title-2" id="letterTitle"></h2>
-            <p class="body muted" id="letterHint"></p>
+        <div class="scene-main final-stack">
+          <div class="photo-grid reveal delay-1" id="photoGrid"></div>
+          <article class="card card-pad letter-card reveal delay-2" id="letterCard">
+            <div class="letter-envelope" id="letterToggle"><span id="letterToggleText">Открыть письмо</span></div>
             <div class="letter-sheet">
+              <h2 class="title-2" id="letterTitle"></h2>
               <p class="body" id="letterBody"></p>
             </div>
           </article>
@@ -689,58 +661,87 @@
 
   <script>
     const config = {
-      unlockAt: '2026-03-08T00:00:00',
-      girlName: 'Имя',
+      unlockAt: '2026-03-08T15:00:00',
       texts: {
         welcomeEyebrow: 'У меня для тебя кое-что есть',
-        welcomeTitle: 'Любимая\\nНурдана',
-        welcomeSubtitle: 'Нежная открытка, собранная с любовью',
+        welcomeTitle: 'Любимая\\nНурданочка',
+        welcomeSubtitle: 'Открыточка для моей возлюбленной',
         startButton: 'Нажми на меня',
-        invitationEyebrow: 'Весенняя открытка',
+        invitationEyebrow: '',
         inviteTitle: 'Приглашение',
-        inviteHint: 'Для тебя, с любовью',
-        inviteBody: 'Тут будет твой текст приглашения. Ты сам потом вставишь нужные слова, место и время.',
-        calendarTitle: 'С 8 марта!',
+        inviteSign: '',
+        inviteBody: 'Нурдана, я хочу пригласить вас сегодня в Capito. В 13:00 я заеду за вами, а к 15:00 мы уже будем там. Очень жду этот день и нашу встречу с вами❤️',
+        calendarTitle: 'С 8 марта милая!',
         invitationBadge: '🌷 Для тебя, с нежностью',
         toCountdownButton: 'Вперед',
         countdownTitle: 'Есть еще одна особенная часть',
-        countdownSubtitle: 'Она откроется, когда наступит 8 марта 00:00 по твоему времени.',
+        countdownSubtitle: 'Она откроется, когда наступит 8 марта 15:00 по нашему времени.',
         countdownLabel: 'До открытия осталось',
         unlockDisabled: 'Пока рано',
         unlockReady: 'Открыть',
         playerTitle: 'Наш мини-плеер',
         playerLinkText: 'Нажми меня',
-        finalTitle: 'Для тебя',
-        letterTitle: 'Письмо',
-        letterHint: 'Открыть письмо',
-        letterBody: 'Здесь будет твой текст письма. Можешь вставить поздравление, теплые слова и все, что хочешь сказать.'
+        finalTitle: 'Для моeй милой, прекрасной принцессы!',
+        letterTitle: 'Дорогая Нурдана,',
+        letterBody: 'Пишу это письмо почти в 7 утра и ловлю себя на мысли, что сделал так мало, хотя мне хочется сделать для тебя гораздо больше. Наверное, в погоне за идеальностью я хочу только одного — чтобы тебе всё понравилось: моё поздравление, моя открытка, которую я только учусь делать, и цветы, которые я так тщательно выбирал среди всех магазинов.Иногда я думаю о том, насколько сильно люблю тебя, если готов днями сидеть над задуманным, переделывать то, что уже сделал, и стараться сделать всё как можно красивее. И всё это только ради тебя одной. Ты даже не представляешь, насколько сильно ты любима мной, насколько ты дорога моему сердцу. Ты вошла в мой мир и пробралась сквозь ту тьму, которая когда-то окружала меня, не подпуская никого близко. Ты единственная, кому я смог по-настоящему открыться, и единственная, рядом с кем я чувствую такое тепло, такую нежность и такую любовь. Ты для меня самый близкий человек. Нурдана, ты та, к кому я всегда тянусь, та, от кого у меня дрожит сердце, та, которой я не перестаю восхищаться, и та, которую я люблю всем сердцем. Ты — свет в моей жизни, мой цветочек, моя любовь. И я бесконечно благодарен судьбе за то, что однажды встретил тебя. Я знаю, что в последнее время был не самым внимательным, и, возможно, не всегда давал тебе то тепло, которое ты заслуживаешь. Я правда запутался, жаным. Но я хочу, чтобы ты знала: я возвращаюсь к себе настоящему, к своему пути, и в этом пути ты для меня очень важна. Просто знай — ты никогда мне не надоедала и не надоешь. Я не смогу полюбить кого-то так, как люблю тебя. Для меня это невозможно. Ты моя поддержка, моё солнце, моя опора и моя принцесса. Спасибо тебе, любимая, за то, что ты рядом. А я, в свою очередь, хочу быть рядом с тобой и делать всё, чтобы рядом со мной ты чувствовала себя любимой, спокойной и счастливой. С 8 Марта, милая моя. Я тебя очень люблю. ❤️'
       },
       images: {
         flowerImage: 'images/tulip-left.png',
         welcomeGif: 'gifs/cat-1.gif',
         welcomeGifSecondary: 'gifs/cat-2.gif',
-        invitationFrameImage: 'images/invate.jpg',
+        invitationPaper: 'images/invate.jpg',
         calendarInnerImage: 'images/calendar-reference.jpeg',
         photoboothImage: 'images/photobooth-reference.jpeg',
         playerImage: 'images/music.gif',
         playerGif: 'gifs/cat-3.gif'
       },
-      playerUrl: 'https://example.com',
+      playerUrl: 'https://open.spotify.com/playlist/41sL233KfSKsSxsAl0XL69?si=fb2a90a22ebc4764',
       finalPhotos: [
-        { src: 'photos/photo1.jpeg', back: 'Текст 1' },
-        { src: 'photos/photo2.jpg', back: 'Текст 2' },
-        { src: 'photos/photo3.jpg', back: 'Текст 3' },
-        { src: 'photos/photo4.jpg', back: 'Текст 4' }
+        { src: 'photos/photo1.jpeg', back: 'Ты просто моё чудо', position: 'center center' },
+        { src: 'photos/photo2.jpeg', back: 'Я безумно тебя люблю, безумно безумно люблю', position: 'center center' },
+        { src: 'photos/photo3.jpeg', back: 'Ты любовь, всей моей жизни', position: 'center center' },
+        { src: 'photos/photo4.jpg', back: 'Я счастлив что ты моя', position: 'center center' }
       ]
     };
 
     const scenes = [...document.querySelectorAll('.scene')];
-    const showScene = (index) => {
+    const burstLayer = document.getElementById('burstLayer');
+    const nl2br = (text) => text.replace(/\\n/g, '<br/>');
+
+    function showScene(index) {
       scenes.forEach((s, i) => s.classList.toggle('active', i === index));
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    }
 
-    const nl2br = (text) => text.replace(/\\n/g, '<br/>');
+    function triggerBurstFrom(button, callback) {
+      const rect = button.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      const flash = document.createElement('span');
+      flash.className = 'flash';
+      flash.style.left = x + 'px';
+      flash.style.top = y + 'px';
+      burstLayer.appendChild(flash);
+
+      const icons = ['♥', '✿', '♥', '✦', '❀', '♥'];
+      for (let i = 0; i < 18; i++) {
+        const el = document.createElement('span');
+        el.className = 'burst';
+        el.textContent = icons[Math.floor(Math.random() * icons.length)];
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        const angle = (Math.PI * 2 * i) / 18 + Math.random() * 0.2;
+        const dist = 42 + Math.random() * 70;
+        el.style.setProperty('--dx', `${Math.cos(angle) * dist}px`);
+        el.style.setProperty('--dy', `${Math.sin(angle) * dist}px`);
+        el.style.setProperty('--rot', `${-40 + Math.random() * 80}deg`);
+        burstLayer.appendChild(el);
+        el.addEventListener('animationend', () => el.remove());
+      }
+      flash.addEventListener('animationend', () => flash.remove());
+      setTimeout(callback, 420);
+    }
 
     function bindText() {
       document.getElementById('welcomeEyebrow').textContent = config.texts.welcomeEyebrow;
@@ -750,8 +751,9 @@
 
       document.getElementById('invitationEyebrow').textContent = config.texts.invitationEyebrow;
       document.getElementById('inviteTitle').textContent = config.texts.inviteTitle;
-      document.getElementById('inviteHint').textContent = config.texts.inviteHint;
       document.getElementById('inviteBody').textContent = config.texts.inviteBody;
+      const signEl = document.getElementById('inviteSign');
+      if (signEl) signEl.textContent = config.texts.inviteSign || '';
       document.getElementById('calendarTitle').textContent = config.texts.calendarTitle;
       document.getElementById('invitationBadge').textContent = config.texts.invitationBadge;
       document.getElementById('toCountdownBtn').textContent = config.texts.toCountdownButton;
@@ -765,12 +767,29 @@
 
       document.getElementById('finalTitle').textContent = config.texts.finalTitle;
       document.getElementById('letterTitle').textContent = config.texts.letterTitle;
-      document.getElementById('letterHint').textContent = config.texts.letterHint;
       document.getElementById('letterBody').textContent = config.texts.letterBody;
 
       document.querySelectorAll('[data-config-img]').forEach((img) => {
         const key = img.getAttribute('data-config-img');
         img.src = config.images[key] || '';
+      });
+    }
+
+    function applySmartMediaBackgrounds() {
+      document.querySelectorAll('.smart-media img').forEach((img) => {
+        const wrapper = img.parentElement;
+        const updateBg = () => {
+          wrapper.style.setProperty('--bg', `url("${img.currentSrc || img.src}")`);
+          const pos = img.dataset.position || 'center center';
+          img.style.objectPosition = pos;
+        };
+        if (img.complete) updateBg();
+        else img.addEventListener('load', updateBg, { once: true });
+      });
+
+      document.querySelectorAll('.flip-front img').forEach((img) => {
+        const pos = img.dataset.position || 'center center';
+        img.style.objectPosition = pos;
       });
     }
 
@@ -800,22 +819,26 @@
 
     function renderParticles() {
       const root = document.getElementById('particles');
-      const icons = ['♥', '✿', '•', '•', '•'];
-      for (let i = 0; i < 24; i++) {
+      root.innerHTML = '';
+      const icons = ['♥', '✿', '•', '•', '❀', '·'];
+      for (let i = 0; i < 34; i++) {
         const span = document.createElement('span');
         span.className = 'particle';
         span.textContent = icons[Math.floor(Math.random() * icons.length)];
         span.style.left = Math.random() * 100 + '%';
         span.style.top = Math.random() * 100 + '%';
-        span.style.animationDuration = 8 + Math.random() * 10 + 's';
-        span.style.animationDelay = -(Math.random() * 10) + 's';
-        span.style.fontSize = (10 + Math.random() * 8) + 'px';
+        span.style.animationDuration = 10 + Math.random() * 12 + 's';
+        span.style.animationDelay = -(Math.random() * 12) + 's';
+        span.style.fontSize = (9 + Math.random() * 9) + 'px';
+        span.style.opacity = (0.12 + Math.random() * 0.16).toFixed(2);
         root.appendChild(span);
       }
     }
 
     function initInteractions() {
-      document.getElementById('startBtn').addEventListener('click', () => showScene(1));
+      document.getElementById('startBtn').addEventListener('click', (e) => {
+        triggerBurstFrom(e.currentTarget, () => showScene(1));
+      });
       document.getElementById('toCountdownBtn').addEventListener('click', () => showScene(2));
       document.getElementById('letterToggle').addEventListener('click', () => {
         document.getElementById('letterCard').classList.toggle('open');
@@ -828,6 +851,7 @@
     function startCountdown() {
       const timerBox = document.getElementById('timerBox');
       const unlockBtn = document.getElementById('unlockBtn');
+
       function render(diff) {
         const total = Math.max(0, diff);
         const days = Math.floor(total / (1000 * 60 * 60 * 24));
@@ -840,6 +864,7 @@
           ['минут', String(minutes).padStart(2, '0')],
           ['секунд', String(seconds).padStart(2, '0')]
         ];
+
         timerBox.innerHTML = parts.map(([label, value]) => `
           <div class="time-card">
             <div class="time-value">${value}</div>
@@ -851,10 +876,10 @@
         unlockBtn.disabled = !unlocked;
         unlockBtn.textContent = unlocked ? config.texts.unlockReady : config.texts.unlockDisabled;
       }
+
       const tick = () => {
         const target = new Date(config.unlockAt).getTime();
-        const now = Date.now();
-        render(target - now);
+        render(target - Date.now());
       };
       tick();
       setInterval(tick, 1000);
@@ -863,12 +888,14 @@
     function renderFinalPhotos() {
       const root = document.getElementById('photoGrid');
       root.innerHTML = '';
-      config.finalPhotos.forEach((item) => {
+      config.finalPhotos.forEach((item, index) => {
         const card = document.createElement('article');
         card.className = 'flip-card';
         card.innerHTML = `
           <div class="flip-inner">
-            <div class="flip-face flip-front"><img src="${item.src}" alt="photo" /></div>
+            <div class="flip-face flip-front">
+              <img src="${item.src}" alt="photo ${index + 1}" data-position="${item.position || 'center center'}" />
+            </div>
             <div class="flip-face flip-back">${item.back}</div>
           </div>
         `;
@@ -883,6 +910,7 @@
     renderFinalPhotos();
     initInteractions();
     startCountdown();
+    applySmartMediaBackgrounds();
   </script>
 </body>
 </html>
